@@ -57,6 +57,8 @@ uint16_t PWMOut = 3000;
 
 uint64_t _micro = 0;
 uint64_t TimeOutputLoop = 0;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,6 +130,10 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  //1 Khz Loop
+	  //ADC อ่านค่าได้ที่  12 bit เเละเมื่อเเปลงเลขฐาน 10 จะได้  0 ถึง 4095 0,1,2,3,4,...,4095 รวมเเล้วได้ 4096ตัว 2^12=4096
+	 //บรรยัดไตรยางค์
+	  //จ่าย input ไฟ 3.3 V -> ADC จะอ่านค่าได้ ถึง 4095
+	 //จ่าย input ไฟ 1 V -> ADC จะอ่านค่าได้ถึง
 	  	if (micros() - TimeOutputLoop > 1000) {
 	  		TimeOutputLoop = micros();
 	  		// #001
