@@ -58,6 +58,14 @@ uint16_t PWMOut = 3000;
 uint64_t _micro = 0;
 uint64_t TimeOutputLoop = 0;
 
+float error = 0;
+
+float kp = 0;
+
+uint16_t voltvalue = 0; //voltvalue คือค่า volt จริงๆที่เราต้องการหน่วยเป็น volt
+
+uint16_t bitvalue = 0; //bitvalue คือการคำนวณ
+
 
 /* USER CODE END PV */
 
@@ -138,6 +146,8 @@ int main(void)
 	  		TimeOutputLoop = micros();
 	  		// #001
 	  		//เกี่ยวกับ Tim1 ตรง parameter setting
+	  		bitvalue = 1;
+	  		error = idealvalue - ADCFeedback;
 	  		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PWMOut);
 
 	  	}
