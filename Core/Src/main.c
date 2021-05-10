@@ -62,10 +62,12 @@ float error = 0;
 
 float kp = 0;
 
-uint16_t voltvalue = 0; //voltvalue คือค่า volt จริงๆที่เราต้องการหน่วยเป็น volt
+uint16_t voltvalue = 1; //voltvalue คือค่า volt จริงๆที่เรา ต้องการ เช่น เราอยากให้ค่านี้ลู่เข้า 1 volt ก็ใส่ตัวเเปรนี้เป็น 1 [หน่วยเป็น volt]
 
-uint16_t bitvalue = 0; //bitvalue คือการคำนวณ
-
+uint16_t bitvalue = 0; //bitvalue คือค่า bit ของ volt ต่างๆที่อยากให้ลู่ voltต่างๆนั้นก็คือ  voltvalue จะมีตัวเเปร voltvalue อยู่ในสมการ  เช่น
+					   //เราให้ voltvalue เป็น 1      ค่า bitvalue ก็จะเป็นค่า bitออกมา ที่ 1volt ตัวอย่าง 3.3V->4095 , 1V->1241 บรรยัดไตรยางค์
+					  //เพราะฉะนั้น bitvalue = 1241 นั้นเองเนื่องจากตั้ง voltvalue เป็น 1 พูดง่ายๆก็คือ bitvalue คือ ค่าของ 1volt ที่เป็น bit
+                                    //หรือ ค่า bit ของ 1 volt นั้นเเอง ถ้าลองใส่ voltvalue เป็น 3.3 bitvalue ก็จะเป็น 4095 นั้นเอง
 
 /* USER CODE END PV */
 
@@ -146,8 +148,8 @@ int main(void)
 	  		TimeOutputLoop = micros();
 	  		// #001
 	  		//เกี่ยวกับ Tim1 ตรง parameter setting
-	  		bitvalue = 1;
-	  		error = idealvalue - ADCFeedback;
+	  		bitvalue = ((4095/3.3)*voltvalue);  //สูตรเเปลง voltvalue ซึ่งก็คือ volt ใดๆ ให้อยู่ในรูป bit ของ volt นั้นๆ
+	  		error = bitvalue - ADCFeedback;
 	  		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PWMOut);
 
 	  	}
