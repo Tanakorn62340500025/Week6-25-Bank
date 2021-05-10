@@ -60,7 +60,7 @@ uint64_t TimeOutputLoop = 0;
 
 float error = 0;
 
-float kp = 0;
+float kp = 1;
 
 uint16_t voltvalue = 1; //voltvalue คือค่า volt จริงๆที่เรา ต้องการ เช่น เราอยากให้ค่านี้ลู่เข้า 1 volt ก็ใส่ตัวเเปรนี้เป็น 1 [หน่วยเป็น volt]
 
@@ -148,9 +148,18 @@ int main(void)
 	  		TimeOutputLoop = micros();
 	  		// #001
 	  		//เกี่ยวกับ Tim1 ตรง parameter setting
-	  		bitvalue = ((4095/3.3)*voltvalue);  //สูตรเเปลง voltvalue ซึ่งก็คือ volt ใดๆ ให้อยู่ในรูป bit ของ volt นั้นๆ
+	  		//bitvalue = ((4095/3.3)*(voltvalue));  //สูตรเเปลง voltvalue ซึ่งก็คือ volt ใดๆ ให้อยู่ในรูป bit ของ volt นั้นๆ
+	  		//                 ^
+	  		//                 ^
+	  		//                 |
+	  		//สูตร bitvalue จริงๆมันคือข้างบนอะเเหละเเต่ uint16 ไม่สามารถคำนวณด้วยทศนิยมได้จริงต้องคูณ 10 เเละหาร 10ไปทั้งเศษเเละส่วนจริงทำให้สูตรกลายเป็น
+
+	  		bitvalue = ((40950/33)*(voltvalue));
+
 	  		error = bitvalue - ADCFeedback;
-	  		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PWMOut);
+	  		PWMOut = (PWMOut + (kp*error));  //update ค่าไปเรื่อยๆเพื่อให้ลู่เข้าใกล้ค่าที่ต้องการ
+
+	  		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PWMOut);  //
 
 	  	}
 
