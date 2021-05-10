@@ -155,7 +155,7 @@ int main(void)
 	  		//สูตร bitvalue จริงๆมันคือข้างบนอะเเหละเเต่ uint16 ไม่สามารถคำนวณด้วยทศนิยมได้จริงต้องคูณ 10 เเละหาร 10ไปทั้งเศษเเละส่วนจริงทำให้สูตรกลายเป็นด้านล่าง
 	  		bitvalue = ((40950/33)*(voltvalue));
 
-	  		error = bitvalue - ADCFeedback;
+	  		error = bitvalue - ADCFeedBack;
 	  		PWMOut = (PWMOut + (kp*error));  //update ค่าไปเรื่อยๆเพื่อให้ลู่เข้าใกล้ค่าที่ต้องการ
 
 	  		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PWMOut);  //
